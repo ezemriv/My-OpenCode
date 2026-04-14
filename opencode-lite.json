@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"],
   "mcp": {
     "context7": {
       "type": "remote",
@@ -13,6 +14,17 @@
       "type": "remote",
       "url": "https://mcp.linear.app/mcp",
       "enabled": false
+    },
+    "notebooklm": {
+      "type": "local",
+      "command": [
+        "notebooklm-mcp"
+      ],
+      "enabled": true,
+      "timeout": 300000
     }
+  },
+  "experimental": {
+    "mcp_timeout": 300000
   }
 }
