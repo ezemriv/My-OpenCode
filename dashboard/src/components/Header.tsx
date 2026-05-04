@@ -37,18 +37,21 @@ export const Header: React.FC<HeaderProps> = ({ lastUpdated, onRefresh, isRefres
             <button
               onClick={onRefresh}
               disabled={isRefreshing}
+              aria-label="Refresh dashboard data"
+              type="button"
               className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-bg-card border border-border-color rounded-lg text-sm text-text-primary hover:border-accent-blue/50 transition-colors disabled:opacity-50"
             >
-              <RefreshCw size={14} className={isRefreshing ? 'animate-spin' : ''} />
+              <RefreshCw size={14} className={isRefreshing ? 'animate-spin' : ''} aria-hidden="true" />
               <span className="hidden sm:inline">Refresh</span>
             </button>
             <a
               href="https://github.com/ezemriv/My-OpenCode"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 text-text-secondary hover:text-text-primary transition-colors"
+              aria-label="View source on GitHub"
+              className="p-2 text-text-secondary hover:text-text-primary transition-colors flex items-center justify-center min-w-[44px] min-h-[44px]"
             >
-              <Github size={18} />
+              <Github size={18} aria-hidden="true" />
             </a>
           </div>
         </div>

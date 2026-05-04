@@ -33,6 +33,9 @@ export const UsageLimits: React.FC<UsageLimitsProps> = ({ costPer5h, costPerWeek
     <div className="bg-bg-secondary border-y border-border-color">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
+        aria-expanded={isExpanded}
+        aria-controls="usage-limits-panel"
+        type="button"
         className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between text-left hover:bg-bg-card/50 transition-colors"
       >
         <div className="flex items-center gap-2">
@@ -44,7 +47,7 @@ export const UsageLimits: React.FC<UsageLimitsProps> = ({ costPer5h, costPerWeek
       </button>
 
       {isExpanded && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
+        <div id="usage-limits-panel" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <LimitCard
               icon={<Clock size={18} className="text-accent-blue" />}

@@ -15,13 +15,27 @@ const taskIcons = {
 };
 
 export const SummaryBar: React.FC<SummaryBarProps> = ({ models, filteredCount }) => {
+  if (models.length === 0) {
+    return (
+      <div className="bg-bg-secondary border-b border-border-color">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <p className="text-text-secondary text-sm">No models available</p>
+        </div>
+      </div>
+    );
+  }
+
   const taskCounts = models.reduce((acc, model) => {
     acc[model.tier.task] = (acc[model.tier.task] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 
-  const avgCost = models.reduce((sum, m) => sum + m.benchmarks.costPer1kTokens, 0) / models.length;
-  const cheapest = models.reduce((min, m) => m.benchmarks.costPer1kTokens < min.benchmarks.costPer1kTokens ? m : min);
+  const avgCost = models.length > 0 
+    ? models.reduce((sum, m) => sum + m.benchmarks.costPer1kTokens, 0) / models.length 
+    : 0;
+  const cheapest = models.length > 0 
+    ? models.reduce((min, m) => m.benchmarks.costPer1kTokens < min.benchmarks.costPer1kTokens ? m : min, models[0])
+    : null;
   const bestCoding = models.filter(m => m.tier.task === 'coding').sort((a, b) => 
     (b.benchmarks.humanEval || 0) - (a.benchmarks.humanEval || 0)
   )[0];
@@ -58,7 +72,7 @@ export const SummaryBar: React.FC<SummaryBarProps> = ({ models, filteredCount })
               <TrendingUp size={16} className="text-accent-yellow" />
             </div>
             <div>
-              <p className="text-sm font-bold text-text-primary truncate">{cheapest.name}</p>
+              <p className="text-sm font-bold text-text-primary truncate">{cheapest?.name || 'N/A'}</p>
               <p className="text-xs text-text-secondary">Most cost-effective</p>
             </div>
           </div>

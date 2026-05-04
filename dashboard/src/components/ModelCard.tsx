@@ -65,7 +65,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({ model }) => {
       <div className="grid grid-cols-2 gap-3 mb-4">
         <div className="bg-bg-secondary rounded-lg p-2.5">
           <div className="flex items-center gap-1.5 text-text-secondary text-xs mb-1">
-            <MessageSquare size={12} />
+            <MessageSquare size={12} aria-hidden="true" />
             <span>Requests/5h</span>
           </div>
           <p className="font-mono text-sm font-medium text-text-primary">
@@ -74,7 +74,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({ model }) => {
         </div>
         <div className="bg-bg-secondary rounded-lg p-2.5">
           <div className="flex items-center gap-1.5 text-text-secondary text-xs mb-1">
-            <DollarSign size={12} />
+            <DollarSign size={12} aria-hidden="true" />
             <span>Cost/1k tokens</span>
           </div>
           <p className="font-mono text-sm font-medium text-text-primary">
@@ -86,7 +86,7 @@ export const ModelCard: React.FC<ModelCardProps> = ({ model }) => {
       {/* Context & Tags */}
       <div className="flex items-center justify-between text-xs text-text-secondary">
         <div className="flex items-center gap-1.5">
-          <Layers size={12} />
+          <Layers size={12} aria-hidden="true" />
           <span>{formatNumber(model.benchmarks.contextWindow)} tokens</span>
         </div>
         <div className="flex gap-1">

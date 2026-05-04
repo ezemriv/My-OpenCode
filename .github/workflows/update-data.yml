@@ -8,6 +8,8 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -19,9 +21,11 @@ jobs:
 
       - name: Fetch latest model data
         run: |
-          curl -s https://opencode.ai/zen/go/v1/models > /tmp/models_raw.json
+          curl -sSL --retry 3 --max-time 30 \
+            https://opencode.ai/zen/go/v1/models \
+            -o /tmp/models_raw.json
           echo "Fetched models data"
-          cat /tmp/models_raw.json | head -50
+          cat /tmp/models_raw.json | head -c 2000
 
       - name: Update data files
         run: |
@@ -35,15 +39,25 @@ jobs:
             const raw = JSON.parse(fs.readFileSync('/tmp/models_raw.json', 'utf8'));
             fetchedModels = Array.isArray(raw) ? raw : (raw.data || []);
           } catch (e) {
-            console.log('Could not parse API response, keeping current data');
+            console.error('Could not parse API response:', e.message);
+            process.exit(1);
           }
           
-          currentData.lastUpdated = new Date().toISOString();
+          if (fetchedModels.length === 0) {
+            console.error('No models fetched from API');
+            process.exit(1);
+          }
           
-          fs.writeFileSync('data/models.json', JSON.stringify(currentData, null, 2));
-          fs.writeFileSync('dashboard/public/data/models.json', JSON.stringify(currentData, null, 2));
-          
-          console.log('Data updated at', currentData.lastUpdated);
+          const hasDataChanged = JSON.stringify(currentData.models) !== JSON.stringify(fetchedModels);
+          if (hasDataChanged) {
+            currentData.models = fetchedModels;
+            currentData.lastUpdated = new Date().toISOString();
+            fs.writeFileSync('data/models.json', JSON.stringify(currentData, null, 2));
+            fs.writeFileSync('dashboard/public/data/models.json', JSON.stringify(currentData, null, 2));
+            console.log('Data updated at', currentData.lastUpdated);
+          } else {
+            console.log('No data changes detected');
+          }
           EOF
           
           node /tmp/update-data.js
@@ -53,5 +67,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/models.json dashboard/public/data/models.json
-          git diff --staged --quiet || git commit -m "chore: update model data [$(date -u +%Y-%m-%d)]"
+          git diff --staged --quiet && echo "No changes to commit" && exit 0
+          git commit -m "chore: update model data [$(date -u +%Y-%m-%d)]"
           git push

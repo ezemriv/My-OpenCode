@@ -23,21 +23,24 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const loadData = useCallback(async () => {
+    const controller = new AbortController();
     try {
       setIsLoading(true);
       setError(null);
       
-      const response = await fetch('./data/models.json');
+      const response = await fetch('./data/models.json', { signal: controller.signal });
       if (!response.ok) throw new Error('Failed to load model data');
       
       const data: DashboardData = await response.json();
       setModels(data.models);
       setLastUpdated(data.lastUpdated);
     } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') return;
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setIsLoading(false);
     }
+    return () => controller.abort();
   }, []);
 
   useEffect(() => {

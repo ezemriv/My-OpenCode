@@ -16,7 +16,7 @@ export default {
         'bg-card': '#1e1e1e',
         'border-color': '#2a2a2a',
         'text-primary': '#e0e0e0',
-        'text-secondary': '#888888',
+        'text-secondary': '#a0a0a0',
         'accent-purple': '#a855f7',
         'accent-blue': '#3b82f6',
         'accent-green': '#22c55e',
