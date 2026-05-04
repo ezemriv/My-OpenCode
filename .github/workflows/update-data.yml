@@ -1,0 +1,57 @@
+name: Update Dashboard Data
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly on Sunday at midnight
+  workflow_dispatch:       # Manual trigger
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch latest model data
+        run: |
+          curl -s https://opencode.ai/zen/go/v1/models > /tmp/models_raw.json
+          echo "Fetched models data"
+          cat /tmp/models_raw.json | head -50
+
+      - name: Update data files
+        run: |
+          cat > /tmp/update-data.js << 'EOF'
+          const fs = require('fs');
+          
+          const currentData = JSON.parse(fs.readFileSync('data/models.json', 'utf8'));
+          
+          let fetchedModels = [];
+          try {
+            const raw = JSON.parse(fs.readFileSync('/tmp/models_raw.json', 'utf8'));
+            fetchedModels = Array.isArray(raw) ? raw : (raw.data || []);
+          } catch (e) {
+            console.log('Could not parse API response, keeping current data');
+          }
+          
+          currentData.lastUpdated = new Date().toISOString();
+          
+          fs.writeFileSync('data/models.json', JSON.stringify(currentData, null, 2));
+          fs.writeFileSync('dashboard/public/data/models.json', JSON.stringify(currentData, null, 2));
+          
+          console.log('Data updated at', currentData.lastUpdated);
+          EOF
+          
+          node /tmp/update-data.js
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/models.json dashboard/public/data/models.json
+          git diff --staged --quiet || git commit -m "chore: update model data [$(date -u +%Y-%m-%d)]"
+          git push
