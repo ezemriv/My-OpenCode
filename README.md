@@ -56,9 +56,9 @@ npx oh-my-opencode install
 
 ### 4. Copy configs to your OpenCode directory
 ```bash
-cp opencode-lite.json ~/.config/opencode/
-cp opencode-full.json ~/.config/opencode/
-cp oh-my-openagent.json ~/.config/opencode/
+cp myopencode_config/opencode-lite.json ~/.config/opencode/
+cp myopencode_config/opencode-full.json ~/.config/opencode/
+cp myopencode_config/oh-my-openagent.json ~/.config/opencode/
 ```
 
 ### 5. Add aliases to your shell config (`.zshrc`, `.bashrc`, etc.)
