@@ -1,4 +1,0 @@
-  ## OpenCode agent toggle
-alias opencode-full='cp ~/.config/opencode/opencode-full.json ~/.config/opencode/opencode.json && echo "OpenCode: agents ON (oh-my-openagent)" && opencode'
-alias opencode-lite='cp ~/.config/opencode/opencode-lite.json ~/.config/opencode/opencode.json && echo "OpenCode: agents OFF (lite mode)" && opencode'
-
