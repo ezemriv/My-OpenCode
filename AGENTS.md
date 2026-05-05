@@ -1,6 +1,6 @@
 # System-Wide Instructions
 
-## About Me
+## 0. About Me
 
 - **Name:** Ezequiel Rivero
 - **Work:** Revenue Management Pricing team at eDreams ODIGEO
@@ -11,7 +11,65 @@
 
 ---
 
-## Technical Preferences
+## 1. Think Before Coding
+
+**Don't assume. Don't hide confusion. Surface tradeoffs.**
+
+Before implementing:
+- State your assumptions explicitly. If uncertain, ask.
+- If multiple interpretations exist, present them - don't pick silently.
+- If a simpler approach exists, say so. Push back when warranted.
+- If something is unclear, stop. Name what's confusing. Ask.
+
+## 2. Simplicity First
+
+**Minimum code that solves the problem. Nothing speculative.**
+
+- No features beyond what was asked.
+- No abstractions for single-use code.
+- No "flexibility" or "configurability" that wasn't requested.
+- No error handling for impossible scenarios.
+- If you write 200 lines and it could be 50, rewrite it.
+
+Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
+
+## 3. Surgical Changes
+
+**Touch only what you must. Clean up only your own mess.**
+
+When editing existing code:
+- Don't "improve" adjacent code, comments, or formatting.
+- Don't refactor things that aren't broken.
+- Match existing style, even if you'd do it differently.
+- If you notice unrelated dead code, mention it - don't delete it.
+
+When your changes create orphans:
+- Remove imports/variables/functions that YOUR changes made unused.
+- Don't remove pre-existing dead code unless asked.
+
+The test: Every changed line should trace directly to the user's request.
+
+## 4. Goal-Driven Execution
+
+**Define success criteria. Loop until verified.**
+
+Transform tasks into verifiable goals:
+- "Add validation" → "Write tests for invalid inputs, then make them pass"
+- "Fix the bug" → "Write a test that reproduces it, then make it pass"
+- "Refactor X" → "Ensure tests pass before and after"
+
+For multi-step tasks, state a brief plan:
+```
+1. [Step] → verify: [check]
+2. [Step] → verify: [check]
+3. [Step] → verify: [check]
+```
+
+Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+
+---
+
+## 5. Technical Preferences
 
 ### Python Development
 - Python ≥ 3.12 with type hints and docstrings
@@ -65,7 +123,7 @@ uv run mypy <module>
 
 ### Plan Format Requirements
 
-When writing implementation plans (via `superpowers:writing-plans` skill or any other planning workflow), every task **MUST** include:
+When writing implementation plans, every task **MUST** include:
 
 #### 1. Model Complexity Tags
 
@@ -101,11 +159,3 @@ Tasks with no dependencies need no `Depends on` line — their absence signals t
 ### Library Documentation via Context7 MCP
 
 When working with **Polars**, **NautilusTrader**, or other rapidly-evolving libraries, **ALWAYS** use the **Context7 MCP server** to fetch up-to-date documentation before writing or refactoring code. If Context7 MCP is not available in the current session, **STOP and ask the user** if they want to enable it before proceeding.
-
-### OpenCode Configuration Questions
-
-When the user asks about opencode configuration (settings, how it works, MCP servers, available tools, etc.), **DO NOT answer based on internal knowledge**. Instead, query the NotebookLM MCP server directly using the notebook: https://notebooklm.google.com/notebook/fc210db4-a845-45e3-bcac-edd9d41fbb1a, which contains updated information about the opencode setup.
-
-### Plan Execution
-
-After writing or loading a plan with `[LOW-COMPLEX]`/`[HIGH-COMPLEX]` tagged tasks, **offer to execute it using the `hive-execute` skill**. This skill dispatches subagents routed by model complexity, enforces TDD, and runs review gates automatically.

@@ -2,6 +2,99 @@
 
 OpenCode configuration and tools.
 
+## Quick Start
+
+This repo contains configuration files for [OpenCode](https://opencode.ai) with two modes:
+
+### Mode 1: Lite (Minimal)
+Lightweight setup with no agent routing:
+```bash
+alias opencode-lite='cp ~/.config/opencode/opencode-lite.json ~/.config/opencode/opencode.json && echo "OpenCode: agents OFF (lite mode)" && opencode'
+```
+
+### Mode 2: Full (with oh-my-openagent)
+Full agentic setup with intelligent model routing:
+```bash
+alias opencode-full='cp ~/.config/opencode/opencode-full.json ~/.config/opencode/opencode.json && cp ~/.config/opencode/oh-my-openagent.json ~/.config/opencode/oh-my-openagent.json && echo "OpenCode: agents ON (oh-my-openagent)" && opencode'
+```
+
+## Setup
+
+1. **Install OpenCode:**
+   ```bash
+   curl -fsSL https://opencode.ai/install | bash
+   ```
+
+2. **Install oh-my-openagent:**
+   ```bash
+   bunx oh-my-opencode install
+   ```
+
+3. **Copy configs to your OpenCode directory:**
+   ```bash
+   cp opencode-lite.json ~/.config/opencode/
+   cp opencode-full.json ~/.config/opencode/
+   cp oh-my-openagent.json ~/.config/opencode/
+   ```
+
+4. **Add aliases to your shell config** (`.zshrc`, `.bashrc`, etc.):
+   ```bash
+   alias opencode-full='cp ~/.config/opencode/opencode-full.json ~/.config/opencode/opencode.json && echo "OpenCode: agents ON (oh-my-openagent)" && opencode'
+   alias opencode-lite='cp ~/.config/opencode/opencode-lite.json ~/.config/opencode/opencode.json && echo "OpenCode: agents OFF (lite mode)" && opencode'
+   ```
+
+## oh-my-openagent Configuration
+
+The `oh-my-openagent.json` file implements **tiered model routing** to maximize performance while avoiding rate limits.
+
+### Tier 1: Volume Workhorse (Never Rate-Limited)
+- **Models:** DeepSeek V4 Flash, Qwen3.5 Plus, MiniMax M2.5
+- **Use for:** Code completion, simple bug fixes, code review, quick tasks
+- **Why:** DeepSeek V4 Flash gives you 31,650 requests per 5 hours
+
+### Tier 2: Standard Engineering (Balanced)
+- **Models:** DeepSeek V4 Pro, Qwen3.6 Plus, MiniMax M2.7
+- **Use for:** Feature implementation, multi-step debugging, standard workflows
+- **Why:** 3,300-3,450 requests per 5 hours
+
+### Tier 3: Complex Agentic (Elite)
+- **Models:** Kimi K2.6, GLM-5.1, MiMo-V2.5-Pro
+- **Use for:** Multi-file refactoring, architecture decisions, long-horizon runs
+- **Why:** Best performance but tight limits (880-1,290 req/5hr)
+
+### Agent Assignments
+
+| Agent | Primary Model | Role |
+|-------|--------------|------|
+| **Sisyphus** | Kimi K2.6 | Main orchestrator |
+| **Hephaestus** | DeepSeek V4 Pro | Autonomous deep worker |
+| **Oracle** | GLM-5.1 | Architecture consultant |
+| **Librarian/Explore** | DeepSeek V4 Flash | Search & exploration |
+| **Prometheus** | GLM-5.1 | Planner |
+| **Metis/Momus** | Qwen3.6 Plus | Review agents |
+| **Code-reviewer** | Kimi K2.6 | Quality review |
+| **Sisyphus-Junior** | DeepSeek V4 Flash | Quick tasks |
+
+### Key Principles
+
+1. **Don't route everything through one model** - K2.6 is great but 1,150 req/5hr is tight
+2. **Use `fallback_models` everywhere** - Rate limits are signals to switch models
+3. **Keep concurrency conservative** - Start at 2-3 parallel tasks
+4. **Route volume work through V4 Flash** - 31K req/5hr is effectively unlimited
+
+### Validation
+
+```bash
+# Check effective model resolution
+bunx oh-my-opencode doctor --verbose
+
+# Refresh model capabilities cache
+bunx oh-my-opencode refresh-model-capabilities
+
+# Start a test session
+opencode
+```
+
 ## OpenCode Go Dashboard
 
 An interactive dashboard for OpenCode Go models with benchmarks, usage limits, and task-based tiering.
@@ -37,3 +130,12 @@ The dashboard is automatically deployed to GitHub Pages on every push to `main`.
 ### Data Updates
 
 Run the GitHub Action manually or wait for the weekly cron job to refresh model data.
+
+## Resources
+
+- [OpenCode Go Docs](https://opencode.ai/docs/go/)
+- [Oh My Open Agent GitHub](https://github.com/code-yeongyu/oh-my-openagent)
+- [Oh My Open Agent Docs](https://ohmyopenagent.com/en/docs)
+- [Tutorial: SOTA Model Routing](https://medium.com/@jatinkrmalik/opencode-go-oh-my-openagent-the-complete-guide-to-sota-model-routing-without-hitting-limits-49fdc8cb3417)
+- [Agent-Model Matching Guide](https://github.com/code-yeongyu/oh-my-openagent/blob/dev/docs/guide/agent-model-matching.md)
+- [Configuration Reference](https://github.com/code-yeongyu/oh-my-openagent/blob/dev/docs/reference/configuration.md)
