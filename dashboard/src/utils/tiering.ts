@@ -28,11 +28,13 @@ export function sortModels(models: GoModel[], sortBy: SortBy): GoModel[] {
   const sorted = [...models];
   switch (sortBy) {
     case 'cost':
-      return sorted.sort((a, b) => a.benchmarks.costPer1kTokens - b.benchmarks.costPer1kTokens);
+      return sorted.sort((a, b) => a.benchmarks.costInput - b.benchmarks.costInput);
     case 'requests':
       return sorted.sort((a, b) => b.limits.requestsPer5h - a.limits.requestsPer5h);
-    case 'benchmark':
-      return sorted.sort((a, b) => (b.benchmarks.humanEval || 0) - (a.benchmarks.humanEval || 0));
+    case 'speed':
+      return sorted.sort((a, b) => (b.benchmarks.speedToksPerSec || 0) - (a.benchmarks.speedToksPerSec || 0));
+    case 'context':
+      return sorted.sort((a, b) => b.benchmarks.contextWindow - a.benchmarks.contextWindow);
     case 'name':
     default:
       return sorted.sort((a, b) => a.name.localeCompare(b.name));

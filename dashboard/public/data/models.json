@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-04T00:00:00Z",
+  "lastUpdated": "2026-05-05T16:00:00Z",
   "models": [
     {
       "id": "glm-5.1",
@@ -20,15 +20,21 @@
         "description": "Best for complex reasoning and analysis"
       },
       "benchmarks": {
-        "humanEval": null,
+        "humanEval": 89.1,
         "mbpp": null,
-        "sweBench": null,
+        "sweBench": 58.4,
+        "sweBenchVerified": 64.2,
         "mmlu": null,
+        "mmluPro": 81.2,
+        "gpqaDiamond": 86.2,
+        "aime2026": 95.3,
         "gsm8k": null,
-        "lmsysElo": null,
+        "lmsysElo": 1470,
         "lmsysRank": null,
-        "costPer1kTokens": 0.0136,
-        "contextWindow": 128000
+        "costInput": 1.0,
+        "costOutput": 3.0,
+        "contextWindow": 203000,
+        "speedToksPerSec": 80
       },
       "tags": ["reasoning", "analysis"],
       "recommendedFor": ["complex-reasoning", "data-analysis", "math"]
@@ -52,15 +58,21 @@
         "description": "Great all-rounder for most tasks"
       },
       "benchmarks": {
-        "humanEval": null,
+        "humanEval": 86.7,
         "mbpp": null,
-        "sweBench": null,
+        "sweBench": 38.6,
+        "sweBenchVerified": 77.8,
         "mmlu": null,
+        "mmluPro": null,
+        "gpqaDiamond": 86.0,
+        "aime2026": 92.7,
         "gsm8k": null,
-        "lmsysElo": null,
+        "lmsysElo": 1457,
         "lmsysRank": null,
-        "costPer1kTokens": 0.0104,
-        "contextWindow": 128000
+        "costInput": 0.6,
+        "costOutput": 2.0,
+        "contextWindow": 200000,
+        "speedToksPerSec": 70
       },
       "tags": ["general", "balanced"],
       "recommendedFor": ["general-purpose", "writing", "coding"]
@@ -84,15 +96,21 @@
         "description": "Best for Python coding and software engineering"
       },
       "benchmarks": {
-        "humanEval": null,
+        "humanEval": 99.0,
         "mbpp": null,
-        "sweBench": null,
+        "sweBench": 50.7,
+        "sweBenchVerified": 76.8,
         "mmlu": null,
+        "mmluPro": 87.1,
+        "gpqaDiamond": 87.6,
+        "aime2026": null,
         "gsm8k": null,
-        "lmsysElo": null,
+        "lmsysElo": 1447,
         "lmsysRank": null,
-        "costPer1kTokens": 0.0065,
-        "contextWindow": 256000
+        "costInput": 0.57,
+        "costOutput": 2.375,
+        "contextWindow": 256000,
+        "speedToksPerSec": 65
       },
       "tags": ["coding", "python", "long-context"],
       "recommendedFor": ["python-coding", "software-engineering", "code-review"]
@@ -118,13 +136,19 @@
       "benchmarks": {
         "humanEval": null,
         "mbpp": null,
-        "sweBench": null,
+        "sweBench": 58.6,
+        "sweBenchVerified": 80.2,
         "mmlu": null,
+        "mmluPro": null,
+        "gpqaDiamond": 90.5,
+        "aime2026": 96.4,
         "gsm8k": null,
         "lmsysElo": null,
         "lmsysRank": null,
-        "costPer1kTokens": 0.0104,
-        "contextWindow": 256000
+        "costInput": 0.95,
+        "costOutput": 4.0,
+        "contextWindow": 262000,
+        "speedToksPerSec": 60
       },
       "tags": ["reasoning", "long-context"],
       "recommendedFor": ["complex-reasoning", "document-analysis", "research"]
@@ -151,12 +175,18 @@
         "humanEval": null,
         "mbpp": null,
         "sweBench": null,
+        "sweBenchVerified": 78.0,
         "mmlu": null,
+        "mmluPro": null,
+        "gpqaDiamond": 87.0,
+        "aime2026": null,
         "gsm8k": null,
-        "lmsysElo": null,
+        "lmsysElo": 1448,
         "lmsysRank": null,
-        "costPer1kTokens": 0.0093,
-        "contextWindow": 128000
+        "costInput": 1.0,
+        "costOutput": 3.0,
+        "contextWindow": 1000000,
+        "speedToksPerSec": 75
       },
       "tags": ["coding", "development"],
       "recommendedFor": ["python-coding", "debugging", "development"]
@@ -183,12 +213,18 @@
         "humanEval": null,
         "mbpp": null,
         "sweBench": null,
+        "sweBenchVerified": 74.8,
         "mmlu": null,
+        "mmluPro": null,
+        "gpqaDiamond": 82.8,
+        "aime2026": null,
         "gsm8k": null,
         "lmsysElo": null,
         "lmsysRank": null,
-        "costPer1kTokens": 0.0056,
-        "contextWindow": 128000
+        "costInput": 0.4,
+        "costOutput": 2.0,
+        "contextWindow": 262000,
+        "speedToksPerSec": 90
       },
       "tags": ["general", "multimodal"],
       "recommendedFor": ["general-purpose", "multimodal", "writing"]
@@ -214,13 +250,19 @@
       "benchmarks": {
         "humanEval": null,
         "mbpp": null,
-        "sweBench": null,
+        "sweBench": 57.2,
+        "sweBenchVerified": null,
         "mmlu": null,
+        "mmluPro": null,
+        "gpqaDiamond": null,
+        "aime2026": null,
         "gsm8k": null,
         "lmsysElo": null,
         "lmsysRank": null,
-        "costPer1kTokens": 0.0093,
-        "contextWindow": 256000
+        "costInput": 1.0,
+        "costOutput": 3.0,
+        "contextWindow": 1000000,
+        "speedToksPerSec": 85
       },
       "tags": ["coding", "advanced"],
       "recommendedFor": ["python-coding", "complex-development", "architecture"]
@@ -247,12 +289,18 @@
         "humanEval": null,
         "mbpp": null,
         "sweBench": null,
+        "sweBenchVerified": null,
         "mmlu": null,
+        "mmluPro": 77.9,
+        "gpqaDiamond": null,
+        "aime2026": null,
         "gsm8k": null,
         "lmsysElo": null,
         "lmsysRank": null,
-        "costPer1kTokens": 0.0056,
-        "contextWindow": 256000
+        "costInput": 0.5,
+        "costOutput": 1.5,
+        "contextWindow": 1000000,
+        "speedToksPerSec": 100
       },
       "tags": ["general", "balanced"],
       "recommendedFor": ["general-purpose", "coding", "writing"]
@@ -276,15 +324,21 @@
         "description": "Strong general-purpose model"
       },
       "benchmarks": {
-        "humanEval": null,
+        "humanEval": 91.0,
         "mbpp": null,
-        "sweBench": null,
+        "sweBench": 56.2,
+        "sweBenchVerified": 75.0,
         "mmlu": null,
+        "mmluPro": null,
+        "gpqaDiamond": 86.2,
+        "aime2026": null,
         "gsm8k": null,
-        "lmsysElo": null,
+        "lmsysElo": 1404,
         "lmsysRank": null,
-        "costPer1kTokens": 0.0035,
-        "contextWindow": 128000
+        "costInput": 0.3,
+        "costOutput": 1.0,
+        "contextWindow": 200000,
+        "speedToksPerSec": 95
       },
       "tags": ["general", "efficient"],
       "recommendedFor": ["general-purpose", "chat", "summarization"]
@@ -311,12 +365,18 @@
         "humanEval": null,
         "mbpp": null,
         "sweBench": null,
+        "sweBenchVerified": 80.2,
         "mmlu": null,
+        "mmluPro": null,
+        "gpqaDiamond": 85.2,
+        "aime2026": 86.3,
         "gsm8k": null,
         "lmsysElo": null,
         "lmsysRank": null,
-        "costPer1kTokens": 0.0019,
-        "contextWindow": 128000
+        "costInput": 0.2,
+        "costOutput": 0.8,
+        "contextWindow": 200000,
+        "speedToksPerSec": 110
       },
       "tags": ["fast", "cheap", "efficient"],
       "recommendedFor": ["simple-tasks", "quick-answers", "drafting"]
@@ -340,15 +400,21 @@
         "description": "Strong general-purpose with great value"
       },
       "benchmarks": {
-        "humanEval": null,
+        "humanEval": 92.5,
         "mbpp": null,
-        "sweBench": null,
+        "sweBench": 56.6,
+        "sweBenchVerified": 78.8,
         "mmlu": null,
+        "mmluPro": 83.5,
+        "gpqaDiamond": 78.2,
+        "aime2026": 87.0,
         "gsm8k": null,
         "lmsysElo": null,
         "lmsysRank": null,
-        "costPer1kTokens": 0.0036,
-        "contextWindow": 128000
+        "costInput": 0.5,
+        "costOutput": 3.0,
+        "contextWindow": 1000000,
+        "speedToksPerSec": 120
       },
       "tags": ["general", "value"],
       "recommendedFor": ["general-purpose", "coding", "analysis"]
@@ -372,15 +438,21 @@
         "description": "Most cost-effective for high-volume tasks"
       },
       "benchmarks": {
-        "humanEval": null,
+        "humanEval": 85.0,
         "mbpp": null,
         "sweBench": null,
+        "sweBenchVerified": 76.4,
         "mmlu": null,
+        "mmluPro": null,
+        "gpqaDiamond": null,
+        "aime2026": null,
         "gsm8k": null,
         "lmsysElo": null,
         "lmsysRank": null,
-        "costPer1kTokens": 0.0012,
-        "contextWindow": 128000
+        "costInput": 0.11,
+        "costOutput": 0.4,
+        "contextWindow": 1000000,
+        "speedToksPerSec": 130
       },
       "tags": ["fast", "cheap", "high-volume"],
       "recommendedFor": ["simple-tasks", "batch-processing", "drafting"]
@@ -404,15 +476,21 @@
         "description": "Elite coding model with reasoning"
       },
       "benchmarks": {
-        "humanEval": null,
+        "humanEval": 76.8,
         "mbpp": null,
-        "sweBench": null,
+        "sweBench": 55.4,
+        "sweBenchVerified": 80.6,
         "mmlu": null,
+        "mmluPro": 87.5,
+        "gpqaDiamond": 90.1,
+        "aime2026": null,
         "gsm8k": null,
         "lmsysElo": null,
         "lmsysRank": null,
-        "costPer1kTokens": 0.0035,
-        "contextWindow": 128000
+        "costInput": 0.5,
+        "costOutput": 1.5,
+        "contextWindow": 1000000,
+        "speedToksPerSec": 90
       },
       "tags": ["coding", "reasoning", "elite"],
       "recommendedFor": ["python-coding", "algorithms", "system-design"]
@@ -436,15 +514,21 @@
         "description": "Ultra-fast for simple tasks and prototyping"
       },
       "benchmarks": {
-        "humanEval": null,
+        "humanEval": 69.5,
         "mbpp": null,
-        "sweBench": null,
+        "sweBench": 52.6,
+        "sweBenchVerified": 79.0,
         "mmlu": null,
+        "mmluPro": 86.2,
+        "gpqaDiamond": 88.1,
+        "aime2026": null,
         "gsm8k": null,
         "lmsysElo": null,
         "lmsysRank": null,
-        "costPer1kTokens": 0.00038,
-        "contextWindow": 128000
+        "costInput": 0.15,
+        "costOutput": 0.5,
+        "contextWindow": 1000000,
+        "speedToksPerSec": 150
       },
       "tags": ["fast", "ultra-cheap", "prototyping"],
       "recommendedFor": ["quick-tasks", "prototyping", "experiments"]

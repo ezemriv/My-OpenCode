@@ -17,12 +17,18 @@ export interface ModelBenchmarks {
   humanEval: number | null;
   mbpp: number | null;
   sweBench: number | null;
+  sweBenchVerified: number | null;
   mmlu: number | null;
+  mmluPro: number | null;
+  gpqaDiamond: number | null;
+  aime2026: number | null;
   gsm8k: number | null;
   lmsysElo: number | null;
   lmsysRank: number | null;
-  costPer1kTokens: number;
+  costInput: number;
+  costOutput: number;
   contextWindow: number;
+  speedToksPerSec: number | null;
 }
 
 export interface GoModel {
@@ -44,4 +50,11 @@ export interface DashboardData {
 
 export type FilterTask = 'all' | ModelTier['task'];
 export type FilterTier = 'all' | ModelTier['claudeComparison'];
-export type SortBy = 'cost' | 'benchmark' | 'name' | 'requests';
+export type SortBy = 'cost' | 'speed' | 'context' | 'requests' | 'name';
+
+export interface CompareSelection {
+  modelId: string;
+  selected: boolean;
+}
+
+export type SelectedModels = string[];

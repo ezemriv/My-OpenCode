@@ -1,33 +1,74 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Clock, Calendar, Timer } from 'lucide-react';
+import { GoModel } from '../types';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { ChevronDown, ChevronUp, BarChart3 } from 'lucide-react';
 
 interface UsageLimitsProps {
-  costPer5h: number;
-  costPerWeek: number;
-  costPerMonth: number;
+  models: GoModel[];
 }
 
-interface LimitCardProps {
-  icon: React.ReactNode;
-  period: string;
-  cost: number;
-  color: string;
+const taskColors: Record<string, string> = {
+  'complex-reasoning': '#a855f7',
+  'coding': '#3b82f6',
+  'general-purpose': '#22c55e',
+  'fast-tasks': '#eab308',
+};
+
+const taskLabels: Record<string, string> = {
+  'complex-reasoning': 'Complex Reasoning',
+  'coding': 'Coding',
+  'general-purpose': 'General Purpose',
+  'fast-tasks': 'Fast Tasks',
+};
+
+interface TooltipPayloadItem {
+  name: string;
+  value: number;
+  payload: {
+    name: string;
+    requests: number;
+    tier: string;
+  };
 }
 
-const LimitCard: React.FC<LimitCardProps> = ({ icon, period, cost, color }) => (
-  <div className="bg-bg-card border border-border-color rounded-xl p-4 flex items-center gap-4">
-    <div className={`w-10 h-10 rounded-lg ${color} flex items-center justify-center`}>
-      {icon}
-    </div>
-    <div>
-      <p className="text-xs text-text-secondary uppercase tracking-wider">{period}</p>
-      <p className="text-2xl font-bold font-mono text-text-primary">${cost}</p>
-    </div>
-  </div>
-);
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: TooltipPayloadItem[];
+}
 
-export const UsageLimits: React.FC<UsageLimitsProps> = ({ costPer5h, costPerWeek, costPerMonth }) => {
+const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    return (
+      <div
+        className="bg-bg-card border border-border-color rounded-lg p-3 shadow-lg"
+        style={{ fontSize: '12px' }}
+      >
+        <p className="font-medium text-text-primary mb-1">{data.name}</p>
+        <p className="text-text-secondary">
+          Requests: <span className="text-text-primary font-mono">{data.requests.toLocaleString()}</span>
+        </p>
+        <p className="text-text-secondary">
+          Tier: <span style={{ color: taskColors[data.tier] || '#888' }}>{taskLabels[data.tier] || data.tier}</span>
+        </p>
+      </div>
+    );
+  }
+  return null;
+};
+
+export const UsageLimits: React.FC<UsageLimitsProps> = ({ models }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const data = models
+    .map(model => ({
+      name: model.name,
+      requests: model.limits.requestsPer5h,
+      tier: model.tier.task,
+    }))
+    .sort((a, b) => b.requests - a.requests);
+
+  const chartHeight = Math.max(models.length * 30, 400);
 
   return (
     <div className="bg-bg-secondary border-y border-border-color">
@@ -39,7 +80,7 @@ export const UsageLimits: React.FC<UsageLimitsProps> = ({ costPer5h, costPerWeek
         className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between text-left hover:bg-bg-card/50 transition-colors"
       >
         <div className="flex items-center gap-2">
-          <Timer size={16} className="text-accent-blue" />
+          <BarChart3 size={16} className="text-accent-blue" />
           <span className="text-sm font-medium text-text-primary">Usage Limits</span>
           <span className="text-xs text-text-secondary">(click to expand)</span>
         </div>
@@ -48,30 +89,59 @@ export const UsageLimits: React.FC<UsageLimitsProps> = ({ costPer5h, costPerWeek
 
       {isExpanded && (
         <div id="usage-limits-panel" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <LimitCard
-              icon={<Clock size={18} className="text-accent-blue" />}
-              period="Per 5 Hours"
-              cost={costPer5h}
-              color="bg-accent-blue/20"
-            />
-            <LimitCard
-              icon={<Calendar size={18} className="text-accent-green" />}
-              period="Per Week"
-              cost={costPerWeek}
-              color="bg-accent-green/20"
-            />
-            <LimitCard
-              icon={<Timer size={18} className="text-accent-purple" />}
-              period="Per Month"
-              cost={costPerMonth}
-              color="bg-accent-purple/20"
-            />
-          </div>
-          <p className="mt-3 text-xs text-text-secondary">
-            Limits are defined in dollar value. Actual request count depends on the model used.
-            Cheaper models allow more requests. When limits are reached, you can continue using free models or top up credits.
-          </p>
+          {models.length === 0 ? (
+            <div className="text-center py-12 text-text-secondary text-sm">
+              No models to display.
+            </div>
+          ) : (
+            <>
+              <div className="flex flex-wrap gap-3 mb-4">
+                {Object.entries(taskLabels).map(([task, label]) => (
+                  <div key={task} className="flex items-center gap-1.5">
+                    <div
+                      className="w-3 h-3 rounded-sm"
+                      style={{ backgroundColor: taskColors[task] }}
+                    />
+                    <span className="text-xs text-text-secondary">{label}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div style={{ height: chartHeight }} className="w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    layout="vertical"
+                    data={data}
+                    margin={{ top: 10, right: 30, left: 20, bottom: 10 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" horizontal={false} />
+                    <XAxis
+                      type="number"
+                      stroke="#888888"
+                      fontSize={10}
+                      tickFormatter={(value) => value.toLocaleString()}
+                    />
+                    <YAxis
+                      type="category"
+                      dataKey="name"
+                      stroke="#888888"
+                      fontSize={10}
+                      width={120}
+                    />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Bar dataKey="requests" radius={[0, 4, 4, 0]}>
+                      {data.map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={taskColors[entry.tier] || '#888'}
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>

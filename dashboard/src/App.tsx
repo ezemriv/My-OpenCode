@@ -2,12 +2,12 @@ import { useState, useEffect, useCallback } from 'react';
 import { GoModel, FilterTask, FilterTier, SortBy, DashboardData } from './types';
 import Header from './components/Header';
 import FilterBar from './components/FilterBar';
-import SummaryBar from './components/SummaryBar';
 import ModelCard from './components/ModelCard';
 import UsageLimits from './components/UsageLimits';
 import BenchmarkChart from './components/BenchmarkChart';
+import CompareModal from './components/CompareModal';
 import { filterModels, sortModels } from './utils/tiering';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, GitCompare } from 'lucide-react';
 
 function App() {
   const [models, setModels] = useState<GoModel[]>([]);
@@ -21,6 +21,10 @@ function App() {
   const [filterTier, setFilterTier] = useState<FilterTier>('all');
   const [sortBy, setSortBy] = useState<SortBy>('name');
   const [searchQuery, setSearchQuery] = useState('');
+  const [contextFilter, setContextFilter] = useState('any');
+
+  const [selectedModels, setSelectedModels] = useState<string[]>([]);
+  const [isCompareOpen, setIsCompareOpen] = useState(false);
 
   const loadData = useCallback(async () => {
     const controller = new AbortController();
@@ -51,6 +55,15 @@ function App() {
     setIsRefreshing(true);
     await loadData();
     setIsRefreshing(false);
+  };
+
+  const handleCompareToggle = (modelId: string, selected: boolean) => {
+    if (selected) {
+      if (selectedModels.length >= 3) return;
+      setSelectedModels([...selectedModels, modelId]);
+    } else {
+      setSelectedModels(selectedModels.filter(id => id !== modelId));
+    }
   };
 
   const filteredModels = sortModels(
@@ -95,25 +108,18 @@ function App() {
         isRefreshing={isRefreshing}
       />
       
-      <SummaryBar models={models} filteredCount={filteredModels.length} />
-      
-      <UsageLimits 
-        costPer5h={12} 
-        costPerWeek={30} 
-        costPerMonth={60}
-      />
-      
-      <BenchmarkChart models={filteredModels} />
-      
       <FilterBar
         filterTask={filterTask}
         filterTier={filterTier}
         sortBy={sortBy}
         searchQuery={searchQuery}
+        models={models}
+        contextFilter={contextFilter}
         onFilterTaskChange={setFilterTask}
         onFilterTierChange={setFilterTier}
         onSortChange={setSortBy}
         onSearchChange={setSearchQuery}
+        onContextFilterChange={setContextFilter}
       />
 
       {/* Model Grid */}
@@ -135,11 +141,37 @@ function App() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredModels.map(model => (
-              <ModelCard key={model.id} model={model} />
+              <ModelCard 
+                key={model.id} 
+                model={model}
+                onCompareToggle={handleCompareToggle}
+              />
             ))}
           </div>
         )}
       </main>
+
+      <UsageLimits models={models} />
+      
+      <BenchmarkChart models={filteredModels} />
+
+      {selectedModels.length > 0 && (
+        <div className="fixed bottom-6 right-6 z-50">
+          <button
+            onClick={() => setIsCompareOpen(true)}
+            className="px-5 py-3 bg-accent-blue text-white rounded-full font-medium shadow-lg hover:bg-accent-blue/90 transition-all flex items-center gap-2"
+          >
+            <GitCompare size={18} />
+            Compare Selected ({selectedModels.length})
+          </button>
+        </div>
+      )}
+
+      <CompareModal
+        models={models.filter(m => selectedModels.includes(m.id))}
+        isOpen={isCompareOpen}
+        onClose={() => setIsCompareOpen(false)}
+      />
 
       {/* Footer */}
       <footer className="border-t border-border-color py-6 mt-8">

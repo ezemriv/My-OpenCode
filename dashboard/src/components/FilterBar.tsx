@@ -1,19 +1,22 @@
 import React from 'react';
-import { Filter, Search, ArrowUpDown } from 'lucide-react';
-import { FilterTask, FilterTier, SortBy } from '../types';
+import { Filter, Search, ArrowUpDown, Layers } from 'lucide-react';
+import { FilterTask, FilterTier, SortBy, GoModel } from '../types';
 
 interface FilterBarProps {
   filterTask: FilterTask;
   filterTier: FilterTier;
   sortBy: SortBy;
   searchQuery: string;
+  models: GoModel[];
+  contextFilter: string;
   onFilterTaskChange: (task: FilterTask) => void;
   onFilterTierChange: (tier: FilterTier) => void;
   onSortChange: (sort: SortBy) => void;
   onSearchChange: (query: string) => void;
+  onContextFilterChange: (ctx: string) => void;
 }
 
-const taskOptions: { value: FilterTask; label: string }[] = [
+const taskOptionValues: { value: FilterTask; label: string }[] = [
   { value: 'all', label: 'All Tasks' },
   { value: 'complex-reasoning', label: 'Complex Reasoning' },
   { value: 'coding', label: 'Coding' },
@@ -30,9 +33,17 @@ const tierOptions: { value: FilterTier; label: string }[] = [
 
 const sortOptions: { value: SortBy; label: string }[] = [
   { value: 'name', label: 'Name' },
-  { value: 'cost', label: 'Cost' },
-  { value: 'requests', label: 'Requests' },
-  { value: 'benchmark', label: 'Benchmark' },
+  { value: 'cost', label: 'Cost (per1M)' },
+  { value: 'speed', label: 'Speed (tok/s)' },
+  { value: 'context', label: 'Context (size)' },
+  { value: 'requests', label: 'Requests (per 5h)' },
+];
+
+const contextOptions: { value: string; label: string }[] = [
+  { value: 'any', label: 'Any Context' },
+  { value: '128000', label: '128K' },
+  { value: '256000', label: '256K' },
+  { value: '1000000', label: '1M' },
 ];
 
 export const FilterBar: React.FC<FilterBarProps> = ({
@@ -40,13 +51,30 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   filterTier,
   sortBy,
   searchQuery,
+  models,
+  contextFilter,
   onFilterTaskChange,
   onFilterTierChange,
   onSortChange,
   onSearchChange,
+  onContextFilterChange,
 }) => {
+  const taskOptions = React.useMemo(() => {
+    const counts: Record<string, number> = {};
+    for (const model of models) {
+      counts[model.tier.task] = (counts[model.tier.task] || 0) + 1;
+    }
+    return taskOptionValues.map(opt => ({
+      ...opt,
+      label:
+        opt.value === 'all'
+          ? `All Tasks (${models.length})`
+          : `${opt.label} (${counts[opt.value] || 0})`,
+    }));
+  }, [models]);
+
   return (
-    <div className="bg-bg-secondary border-b border-border-color">
+    <div className="sticky top-[73px] z-40 bg-bg-secondary border-b border-border-color">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex flex-col sm:flex-row gap-3">
           {/* Search */}
@@ -89,6 +117,20 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
               ))}
             </select>
+
+            <div className="relative">
+              <Layers size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-secondary" />
+              <select
+                value={contextFilter}
+                onChange={(e) => onContextFilterChange(e.target.value)}
+                aria-label="Filter by context size"
+                className="pl-8 pr-8 py-2 bg-bg-card border border-border-color rounded-lg text-sm text-text-primary focus-visible:ring-2 focus-visible:ring-accent-blue/50 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-secondary focus-visible:border-accent-blue/50 outline-none appearance-none cursor-pointer"
+              >
+                {contextOptions.map(opt => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
+            </div>
 
             <div className="relative">
               <ArrowUpDown size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-secondary" />

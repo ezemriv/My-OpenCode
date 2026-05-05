@@ -7,13 +7,15 @@ interface BenchmarkChartProps {
   models: GoModel[];
 }
 
-type MetricKey = 'humanEval' | 'mmlu' | 'lmsysElo' | 'costPer1kTokens';
+type MetricKey = 'humanEval' | 'sweBenchVerified' | 'gpqaDiamond' | 'aime2026' | 'mmluPro' | 'lmsysElo';
 
-const metricConfig: Record<MetricKey, { label: string; color: string; domain?: [number, number] }> = {
-  humanEval: { label: 'HumanEval (%)', color: '#3b82f6', domain: [0, 100] },
-  mmlu: { label: 'MMLU (%)', color: '#22c55e', domain: [0, 100] },
-  lmsysElo: { label: 'LMSYS Elo', color: '#a855f7', domain: [1000, 1400] },
-  costPer1kTokens: { label: 'Cost/1k tokens ($)', color: '#eab308', domain: [0, 0.02] },
+const metricConfig: Record<MetricKey, { label: string; color: string; domain: [number, number]; icon?: string }> = {
+  humanEval: { label: 'HumanEval (%) [code gen]', color: '#3b82f6', domain: [0, 100] },
+  sweBenchVerified: { label: 'SWE-bench Verified (%) [real-world code]', color: '#22c55e', domain: [0, 100] },
+  gpqaDiamond: { label: 'GPQA Diamond (%) [science]', color: '#a855f7', domain: [0, 100] },
+  aime2026: { label: 'AIME 2026 (%) [math]', color: '#eab308', domain: [0, 100] },
+  mmluPro: { label: 'MMLU-Pro (%) [general knowledge]', color: '#ef4444', domain: [0, 100] },
+  lmsysElo: { label: 'LMSYS Elo [chat arena]', color: '#06b6d4', domain: [1200, 1500] },
 };
 
 export const BenchmarkChart: React.FC<BenchmarkChartProps> = ({ models }) => {
@@ -21,12 +23,15 @@ export const BenchmarkChart: React.FC<BenchmarkChartProps> = ({ models }) => {
   const [activeMetric, setActiveMetric] = useState<MetricKey>('humanEval');
 
   const data = models
+    .filter(model => model.benchmarks[activeMetric] !== null)
     .map(model => ({
       name: model.name,
-      value: model.benchmarks[activeMetric] || 0,
+      value: model.benchmarks[activeMetric] as number,
       tier: model.tier.task,
     }))
     .sort((a, b) => b.value - a.value);
+
+  const hasData = data.length > 0;
 
   const config = metricConfig[activeMetric];
 
@@ -49,9 +54,11 @@ export const BenchmarkChart: React.FC<BenchmarkChartProps> = ({ models }) => {
 
       {isExpanded && (
         <div id="benchmark-chart-panel" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
-          {models.length === 0 ? (
+          {!hasData ? (
             <div className="text-center py-12 text-text-secondary text-sm">
-              No models to display. Adjust filters to see benchmarks.
+              {models.length === 0
+                ? 'No models to display. Adjust filters to see benchmarks.'
+                : `No data available for ${config.label}.`}
             </div>
           ) : (
             <>
