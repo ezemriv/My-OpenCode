@@ -20,28 +20,52 @@ alias opencode-full='cp ~/.config/opencode/opencode-full.json ~/.config/opencode
 
 ## Setup
 
-1. **Install OpenCode:**
-   ```bash
-   curl -fsSL https://opencode.ai/install | bash
-   ```
+### 1. Install OpenCode
+```bash
+curl -fsSL https://opencode.ai/install | bash
+```
 
-2. **Install oh-my-openagent:**
-   ```bash
-   bunx oh-my-opencode install
-   ```
+### 2. Install Bun (Recommended)
 
-3. **Copy configs to your OpenCode directory:**
-   ```bash
-   cp opencode-lite.json ~/.config/opencode/
-   cp opencode-full.json ~/.config/opencode/
-   cp oh-my-openagent.json ~/.config/opencode/
-   ```
+Bun is the JavaScript runtime used by oh-my-openagent. It's much faster than Node.js:
 
-4. **Add aliases to your shell config** (`.zshrc`, `.bashrc`, etc.):
-   ```bash
-   alias opencode-full='cp ~/.config/opencode/opencode-full.json ~/.config/opencode/opencode.json && echo "OpenCode: agents ON (oh-my-openagent)" && opencode'
-   alias opencode-lite='cp ~/.config/opencode/opencode-lite.json ~/.config/opencode/opencode.json && echo "OpenCode: agents OFF (lite mode)" && opencode'
-   ```
+```bash
+# Install Bun
+curl -fsSL https://bun.sh/install | bash
+
+# Or via Homebrew
+brew install oven-sh/bun/bun
+
+# Verify installation
+bun --version
+```
+
+**If you prefer not to install Bun**, you can use npm instead (see validation section below).
+
+### 3. Install oh-my-openagent
+
+**With Bun (recommended):**
+```bash
+bunx oh-my-opencode install
+```
+
+**With npm (fallback):**
+```bash
+npx oh-my-opencode install
+```
+
+### 4. Copy configs to your OpenCode directory
+```bash
+cp opencode-lite.json ~/.config/opencode/
+cp opencode-full.json ~/.config/opencode/
+cp oh-my-openagent.json ~/.config/opencode/
+```
+
+### 5. Add aliases to your shell config (`.zshrc`, `.bashrc`, etc.)
+```bash
+alias opencode-full='cp ~/.config/opencode/opencode-full.json ~/.config/opencode/opencode.json && echo "OpenCode: agents ON (oh-my-openagent)" && opencode'
+alias opencode-lite='cp ~/.config/opencode/opencode-lite.json ~/.config/opencode/opencode.json && echo "OpenCode: agents OFF (lite mode)" && opencode'
+```
 
 ## Validation Checklist
 
@@ -54,21 +78,45 @@ opencode --version
 **Expected:** `>= 1.0.133` (preferably `1.0.150+`)
 
 ### 2. Verify oh-my-openagent Installation
+
+**With Bun:**
 ```bash
 bunx oh-my-opencode doctor
 ```
+
+**With npm:**
+```bash
+npx oh-my-opencode doctor
+```
+
 **Expected:** All checks pass with green checkmarks
 
 ### 3. Detailed Diagnostics
+
+**With Bun:**
 ```bash
 bunx oh-my-opencode doctor --verbose
 ```
+
+**With npm:**
+```bash
+npx oh-my-opencode doctor --verbose
+```
+
 **Expected:** Shows effective model resolution for each agent
 
 ### 4. Refresh Model Capabilities Cache
+
+**With Bun:**
 ```bash
 bunx oh-my-opencode refresh-model-capabilities
 ```
+
+**With npm:**
+```bash
+npx oh-my-opencode refresh-model-capabilities
+```
+
 **Expected:** Cache updated successfully
 
 ### 5. List Available Models
@@ -92,12 +140,27 @@ Once inside OpenCode, the first message should show which model Sisyphus is usin
 ### 8. Verify Plugin Loading
 Check that the plugin loads without errors. If you see:
 - `Plugin "oh-my-openagent@latest" loaded successfully` ✅
-- `Failed to resolve plugin` ❌ → Check your internet connection or try `bunx oh-my-opencode install` again
+- `Failed to resolve plugin` ❌ → Check your internet connection or reinstall
 
 ## Troubleshooting
 
+### Issue: `bunx` or `npx` command not found
+**Fix:** Install the corresponding runtime:
+```bash
+# Install Bun
+curl -fsSL https://bun.sh/install | bash
+
+# Or use npm (already installed with Node.js)
+npx oh-my-opencode install
+```
+
 ### Issue: `doctor` command shows missing models
-**Fix:** Run `bunx oh-my-opencode refresh-model-capabilities`
+**Fix:** 
+```bash
+bunx oh-my-opencode refresh-model-capabilities
+# or
+npx oh-my-opencode refresh-model-capabilities
+```
 
 ### Issue: Plugin fails to load
 **Fix:** 
