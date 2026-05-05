@@ -43,6 +43,83 @@ alias opencode-full='cp ~/.config/opencode/opencode-full.json ~/.config/opencode
    alias opencode-lite='cp ~/.config/opencode/opencode-lite.json ~/.config/opencode/opencode.json && echo "OpenCode: agents OFF (lite mode)" && opencode'
    ```
 
+## Validation Checklist
+
+Run these commands to verify your setup:
+
+### 1. Check OpenCode Version
+```bash
+opencode --version
+```
+**Expected:** `>= 1.0.133` (preferably `1.0.150+`)
+
+### 2. Verify oh-my-openagent Installation
+```bash
+bunx oh-my-opencode doctor
+```
+**Expected:** All checks pass with green checkmarks
+
+### 3. Detailed Diagnostics
+```bash
+bunx oh-my-opencode doctor --verbose
+```
+**Expected:** Shows effective model resolution for each agent
+
+### 4. Refresh Model Capabilities Cache
+```bash
+bunx oh-my-opencode refresh-model-capabilities
+```
+**Expected:** Cache updated successfully
+
+### 5. List Available Models
+```bash
+opencode models
+```
+**Expected:** Shows all OpenCode Go models (Kimi K2.6, DeepSeek V4 Pro, GLM-5.1, etc.)
+
+### 6. Authenticate with OpenCode Go
+```bash
+opencode auth login
+```
+**Expected:** Successfully authenticates with your OpenCode Go account
+
+### 7. Test Agent Resolution
+```bash
+opencode
+```
+Once inside OpenCode, the first message should show which model Sisyphus is using (e.g., `opencode-go/kimi-k2.6`)
+
+### 8. Verify Plugin Loading
+Check that the plugin loads without errors. If you see:
+- `Plugin "oh-my-openagent@latest" loaded successfully` ✅
+- `Failed to resolve plugin` ❌ → Check your internet connection or try `bunx oh-my-opencode install` again
+
+## Troubleshooting
+
+### Issue: `doctor` command shows missing models
+**Fix:** Run `bunx oh-my-opencode refresh-model-capabilities`
+
+### Issue: Plugin fails to load
+**Fix:** 
+```bash
+bunx oh-my-opencode install --no-tui \
+  --opencode-go=yes \
+  --opencode-zen=yes \
+  --claude=no \
+  --openai=no \
+  --gemini=no \
+  --copilot=no
+```
+
+### Issue: Rate limits hit immediately
+**Fix:** Check that `oh-my-openagent.json` is in `~/.config/opencode/` and that `model_fallback: true` is set
+
+### Issue: OpenCode version too old
+**Fix:** Update OpenCode:
+```bash
+curl -fsSL https://opencode.ai/install | bash
+```
+
 ## oh-my-openagent Configuration
 
 The `oh-my-openagent.json` file implements **tiered model routing** to maximize performance while avoiding rate limits.
@@ -81,19 +158,6 @@ The `oh-my-openagent.json` file implements **tiered model routing** to maximize 
 2. **Use `fallback_models` everywhere** - Rate limits are signals to switch models
 3. **Keep concurrency conservative** - Start at 2-3 parallel tasks
 4. **Route volume work through V4 Flash** - 31K req/5hr is effectively unlimited
-
-### Validation
-
-```bash
-# Check effective model resolution
-bunx oh-my-opencode doctor --verbose
-
-# Refresh model capabilities cache
-bunx oh-my-opencode refresh-model-capabilities
-
-# Start a test session
-opencode
-```
 
 ## OpenCode Go Dashboard
 
