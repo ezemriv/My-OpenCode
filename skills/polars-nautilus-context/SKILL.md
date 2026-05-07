@@ -28,7 +28,7 @@ Before writing or refactoring any code, you **MUST** use the Context7 MCP to loo
 
 After gathering documentation, check if a standards file already exists in the project:
 
-- Look for `LIBRARY_STANDARDS.md` in the project root.
+- Look for `LIBRARY_STANDARDS.md` in the project root or `.claude/` directory.
 
 **If it does NOT exist**, create `LIBRARY_STANDARDS.md` in the project root with:
 

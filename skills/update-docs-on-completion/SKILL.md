@@ -7,7 +7,7 @@ description: Use when a plan, workflow, feature branch, extraction session, or s
 
 ## Overview
 
-**Mandatory post-completion documentation sync.** Dispatches a general subagent to update all relevant .md files (CLAUDE.md, README.md, AGENTS.md, copilot-instructions.md, GEMINI.md, TODO.md, etc.) so the next session starts with accurate context.
+**Mandatory post-completion documentation sync.** Dispatches the `Docs-Updater` haiku subagent to update all relevant .md files (CLAUDE.md, README.md, AGENTS.md, copilot-instructions.md, GEMINI.md, TODO.md, etc.) so the next session starts with accurate context.
 
 **Core principle:** Stale documentation is worse than no documentation — it actively misleads future sessions.
 
@@ -33,7 +33,8 @@ description: Use when a plan, workflow, feature branch, extraction session, or s
    - Any conventions established or changed
    - Phase/status changes
 
-2. DISPATCH `general` subagent:
+2. DISPATCH Docs-Updater subagent:
+   Use Task tool with subagent_type="Docs-Updater", model="haiku"
    Pass the summary as the prompt, including:
    - The completion summary
    - Which directories/modules were affected
@@ -42,7 +43,7 @@ description: Use when a plan, workflow, feature branch, extraction session, or s
 3. REVIEW the subagent's report:
    - Verify edits are accurate
    - Ensure nothing critical was missed
-   - Ensure *.md changes are concise (token budget matters)
+   - Ensure CLAUDE.md changes are concise (token budget matters)
 ```
 
 ## Prompt Template for Subagent
@@ -60,7 +61,7 @@ The following work was just completed in this repository:
 {ANY_KNOWN_GAPS_OR_STALE_INFO}
 
 Find and update all relevant .md documentation files to reflect these changes.
-Focus especially on *.md accuracy — it drives all future AI sessions.
+Focus especially on CLAUDE.md accuracy — it drives all future AI sessions.
 ```
 
 ## Red Flags
@@ -72,4 +73,4 @@ Focus especially on *.md accuracy — it drives all future AI sessions.
 
 ## The Bottom Line
 
-Every completed task that changes project state MUST end with a documentation updater subagent dispatch. It costs almost nothing (cheap model) and prevents the #1 cause of wasted time: starting a session with wrong context.
+Every completed task that changes project state MUST end with a Docs-Updater dispatch. It costs almost nothing (haiku model) and prevents the #1 cause of wasted time: starting a session with wrong context.
