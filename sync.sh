@@ -4,6 +4,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OPENCODE_DIR="$HOME/.config/opencode"
 OPENCODE_SKILLS_DIR="$OPENCODE_DIR/skills"
+OPENCODE_COMMANDS_DIR="$OPENCODE_DIR/commands"
 
 CONFIG_FILES=(
     "opencode-lite.json"
@@ -24,6 +25,7 @@ warn() { echo "  ⚠️  $1"; }
 
 mkdir -p "$OPENCODE_DIR"
 mkdir -p "$OPENCODE_SKILLS_DIR"
+mkdir -p "$OPENCODE_COMMANDS_DIR"
 
 echo "=== Syncing OpenCode Configs ==="
 for file in "${CONFIG_FILES[@]}"; do
@@ -48,6 +50,7 @@ for skill in "${CUSTOM_SKILLS[@]}"; do
     src="$SCRIPT_DIR/skills/$skill"
     dst="$OPENCODE_SKILLS_DIR/$skill"
     if [[ -d "$src" ]]; then
+        rm -rf "$dst"
         cp -R "$src" "$dst"
         ok "Copied skill: $skill/"
     else
@@ -56,6 +59,19 @@ for skill in "${CUSTOM_SKILLS[@]}"; do
 done
 
 echo ""
+echo "=== Syncing Commands ==="
+src="$SCRIPT_DIR/commands"
+dst="$OPENCODE_DIR/commands"
+if [[ -d "$src" ]]; then
+    rm -rf "$dst"
+    cp -R "$src" "$dst"
+    ok "Copied commands/"
+else
+    warn "Source not found: $src"
+fi
+
+echo ""
 echo "=== Sync Complete ==="
-echo "Configs → $OPENCODE_DIR/"
-echo "Skills  → $OPENCODE_SKILLS_DIR/"
+echo "Configs  → $OPENCODE_DIR/"
+echo "Skills   → $OPENCODE_SKILLS_DIR/"
+echo "Commands → $OPENCODE_COMMANDS_DIR/"
