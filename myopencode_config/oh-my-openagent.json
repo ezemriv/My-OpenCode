@@ -122,5 +122,11 @@
   },
   "git_master": {
     "include_co_authored_by": false
+  },
+  "team_mode": {
+    "enabled": true,
+    "max_parallel_members": 4,
+    "max_members": 6,
+    "tmux_visualization": true
   }
 }
