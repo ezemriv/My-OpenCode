@@ -1,537 +1,89 @@
 {
-  "lastUpdated": "2026-05-05T16:00:00Z",
+  "lastUpdated": "2026-05-10T03:24:58.075Z",
   "models": [
     {
-      "id": "glm-5.1",
-      "name": "GLM-5.1",
-      "provider": "Zhipu AI",
-      "endpoint": "https://opencode.ai/zen/go/v1/chat/completions",
-      "limits": {
-        "requestsPer5h": 880,
-        "requestsPerWeek": 2150,
-        "requestsPerMonth": 4300,
-        "costPer5h": 12,
-        "costPerWeek": 30,
-        "costPerMonth": 60
-      },
-      "tier": {
-        "task": "complex-reasoning",
-        "claudeComparison": "opus-4.6",
-        "description": "Best for complex reasoning and analysis"
-      },
-      "benchmarks": {
-        "humanEval": 89.1,
-        "mbpp": null,
-        "sweBench": 58.4,
-        "sweBenchVerified": 64.2,
-        "mmlu": null,
-        "mmluPro": 81.2,
-        "gpqaDiamond": 86.2,
-        "aime2026": 95.3,
-        "gsm8k": null,
-        "lmsysElo": 1470,
-        "lmsysRank": null,
-        "costInput": 1.0,
-        "costOutput": 3.0,
-        "contextWindow": 203000,
-        "speedToksPerSec": 80
-      },
-      "tags": ["reasoning", "analysis"],
-      "recommendedFor": ["complex-reasoning", "data-analysis", "math"]
-    },
-    {
-      "id": "glm-5",
-      "name": "GLM-5",
-      "provider": "Zhipu AI",
-      "endpoint": "https://opencode.ai/zen/go/v1/chat/completions",
-      "limits": {
-        "requestsPer5h": 1150,
-        "requestsPerWeek": 2880,
-        "requestsPerMonth": 5750,
-        "costPer5h": 12,
-        "costPerWeek": 30,
-        "costPerMonth": 60
-      },
-      "tier": {
-        "task": "general-purpose",
-        "claudeComparison": "sonnet-4.6",
-        "description": "Great all-rounder for most tasks"
-      },
-      "benchmarks": {
-        "humanEval": 86.7,
-        "mbpp": null,
-        "sweBench": 38.6,
-        "sweBenchVerified": 77.8,
-        "mmlu": null,
-        "mmluPro": null,
-        "gpqaDiamond": 86.0,
-        "aime2026": 92.7,
-        "gsm8k": null,
-        "lmsysElo": 1457,
-        "lmsysRank": null,
-        "costInput": 0.6,
-        "costOutput": 2.0,
-        "contextWindow": 200000,
-        "speedToksPerSec": 70
-      },
-      "tags": ["general", "balanced"],
-      "recommendedFor": ["general-purpose", "writing", "coding"]
-    },
-    {
-      "id": "kimi-k2.5",
-      "name": "Kimi K2.5",
-      "provider": "Moonshot AI",
-      "endpoint": "https://opencode.ai/zen/go/v1/chat/completions",
-      "limits": {
-        "requestsPer5h": 1850,
-        "requestsPerWeek": 4630,
-        "requestsPerMonth": 9250,
-        "costPer5h": 12,
-        "costPerWeek": 30,
-        "costPerMonth": 60
-      },
-      "tier": {
-        "task": "coding",
-        "claudeComparison": "opus-4.6",
-        "description": "Best for Python coding and software engineering"
-      },
-      "benchmarks": {
-        "humanEval": 99.0,
-        "mbpp": null,
-        "sweBench": 50.7,
-        "sweBenchVerified": 76.8,
-        "mmlu": null,
-        "mmluPro": 87.1,
-        "gpqaDiamond": 87.6,
-        "aime2026": null,
-        "gsm8k": null,
-        "lmsysElo": 1447,
-        "lmsysRank": null,
-        "costInput": 0.57,
-        "costOutput": 2.375,
-        "contextWindow": 256000,
-        "speedToksPerSec": 65
-      },
-      "tags": ["coding", "python", "long-context"],
-      "recommendedFor": ["python-coding", "software-engineering", "code-review"]
-    },
-    {
-      "id": "kimi-k2.6",
-      "name": "Kimi K2.6",
-      "provider": "Moonshot AI",
-      "endpoint": "https://opencode.ai/zen/go/v1/chat/completions",
-      "limits": {
-        "requestsPer5h": 1150,
-        "requestsPerWeek": 2880,
-        "requestsPerMonth": 5750,
-        "costPer5h": 12,
-        "costPerWeek": 30,
-        "costPerMonth": 60
-      },
-      "tier": {
-        "task": "complex-reasoning",
-        "claudeComparison": "opus-4.6",
-        "description": "Best for complex reasoning and long-context tasks"
-      },
-      "benchmarks": {
-        "humanEval": null,
-        "mbpp": null,
-        "sweBench": 58.6,
-        "sweBenchVerified": 80.2,
-        "mmlu": null,
-        "mmluPro": null,
-        "gpqaDiamond": 90.5,
-        "aime2026": 96.4,
-        "gsm8k": null,
-        "lmsysElo": null,
-        "lmsysRank": null,
-        "costInput": 0.95,
-        "costOutput": 4.0,
-        "contextWindow": 262000,
-        "speedToksPerSec": 60
-      },
-      "tags": ["reasoning", "long-context"],
-      "recommendedFor": ["complex-reasoning", "document-analysis", "research"]
-    },
-    {
-      "id": "mimo-v2-pro",
-      "name": "MiMo-V2-Pro",
-      "provider": "Xiaomi",
-      "endpoint": "https://opencode.ai/zen/go/v1/chat/completions",
-      "limits": {
-        "requestsPer5h": 1290,
-        "requestsPerWeek": 3225,
-        "requestsPerMonth": 6450,
-        "costPer5h": 12,
-        "costPerWeek": 30,
-        "costPerMonth": 60
-      },
-      "tier": {
-        "task": "coding",
-        "claudeComparison": "opus-4.6",
-        "description": "Best for Python coding and development"
-      },
-      "benchmarks": {
-        "humanEval": null,
-        "mbpp": null,
-        "sweBench": null,
-        "sweBenchVerified": 78.0,
-        "mmlu": null,
-        "mmluPro": null,
-        "gpqaDiamond": 87.0,
-        "aime2026": null,
-        "gsm8k": null,
-        "lmsysElo": 1448,
-        "lmsysRank": null,
-        "costInput": 1.0,
-        "costOutput": 3.0,
-        "contextWindow": 1000000,
-        "speedToksPerSec": 75
-      },
-      "tags": ["coding", "development"],
-      "recommendedFor": ["python-coding", "debugging", "development"]
-    },
-    {
-      "id": "mimo-v2-omni",
-      "name": "MiMo-V2-Omni",
-      "provider": "Xiaomi",
-      "endpoint": "https://opencode.ai/zen/go/v1/chat/completions",
-      "limits": {
-        "requestsPer5h": 2150,
-        "requestsPerWeek": 5450,
-        "requestsPerMonth": 10900,
-        "costPer5h": 12,
-        "costPerWeek": 30,
-        "costPerMonth": 60
-      },
-      "tier": {
-        "task": "general-purpose",
-        "claudeComparison": "sonnet-4.6",
-        "description": "Great all-rounder with multimodal capabilities"
-      },
-      "benchmarks": {
-        "humanEval": null,
-        "mbpp": null,
-        "sweBench": null,
-        "sweBenchVerified": 74.8,
-        "mmlu": null,
-        "mmluPro": null,
-        "gpqaDiamond": 82.8,
-        "aime2026": null,
-        "gsm8k": null,
-        "lmsysElo": null,
-        "lmsysRank": null,
-        "costInput": 0.4,
-        "costOutput": 2.0,
-        "contextWindow": 262000,
-        "speedToksPerSec": 90
-      },
-      "tags": ["general", "multimodal"],
-      "recommendedFor": ["general-purpose", "multimodal", "writing"]
-    },
-    {
-      "id": "mimo-v2.5-pro",
-      "name": "MiMo-V2.5-Pro",
-      "provider": "Xiaomi",
-      "endpoint": "https://opencode.ai/zen/go/v1/chat/completions",
-      "limits": {
-        "requestsPer5h": 1290,
-        "requestsPerWeek": 3225,
-        "requestsPerMonth": 6450,
-        "costPer5h": 12,
-        "costPerWeek": 30,
-        "costPerMonth": 60
-      },
-      "tier": {
-        "task": "coding",
-        "claudeComparison": "opus-4.6",
-        "description": "Advanced coding model"
-      },
-      "benchmarks": {
-        "humanEval": null,
-        "mbpp": null,
-        "sweBench": 57.2,
-        "sweBenchVerified": null,
-        "mmlu": null,
-        "mmluPro": null,
-        "gpqaDiamond": null,
-        "aime2026": null,
-        "gsm8k": null,
-        "lmsysElo": null,
-        "lmsysRank": null,
-        "costInput": 1.0,
-        "costOutput": 3.0,
-        "contextWindow": 1000000,
-        "speedToksPerSec": 85
-      },
-      "tags": ["coding", "advanced"],
-      "recommendedFor": ["python-coding", "complex-development", "architecture"]
-    },
-    {
-      "id": "mimo-v2.5",
-      "name": "MiMo-V2.5",
-      "provider": "Xiaomi",
-      "endpoint": "https://opencode.ai/zen/go/v1/chat/completions",
-      "limits": {
-        "requestsPer5h": 2150,
-        "requestsPerWeek": 5450,
-        "requestsPerMonth": 10900,
-        "costPer5h": 12,
-        "costPerWeek": 30,
-        "costPerMonth": 60
-      },
-      "tier": {
-        "task": "general-purpose",
-        "claudeComparison": "sonnet-4.6",
-        "description": "Balanced performance and efficiency"
-      },
-      "benchmarks": {
-        "humanEval": null,
-        "mbpp": null,
-        "sweBench": null,
-        "sweBenchVerified": null,
-        "mmlu": null,
-        "mmluPro": 77.9,
-        "gpqaDiamond": null,
-        "aime2026": null,
-        "gsm8k": null,
-        "lmsysElo": null,
-        "lmsysRank": null,
-        "costInput": 0.5,
-        "costOutput": 1.5,
-        "contextWindow": 1000000,
-        "speedToksPerSec": 100
-      },
-      "tags": ["general", "balanced"],
-      "recommendedFor": ["general-purpose", "coding", "writing"]
-    },
-    {
       "id": "minimax-m2.7",
-      "name": "MiniMax M2.7",
-      "provider": "MiniMax",
-      "endpoint": "https://opencode.ai/zen/go/v1/messages",
-      "limits": {
-        "requestsPer5h": 3400,
-        "requestsPerWeek": 8500,
-        "requestsPerMonth": 17000,
-        "costPer5h": 12,
-        "costPerWeek": 30,
-        "costPerMonth": 60
-      },
-      "tier": {
-        "task": "general-purpose",
-        "claudeComparison": "sonnet-4.6",
-        "description": "Strong general-purpose model"
-      },
-      "benchmarks": {
-        "humanEval": 91.0,
-        "mbpp": null,
-        "sweBench": 56.2,
-        "sweBenchVerified": 75.0,
-        "mmlu": null,
-        "mmluPro": null,
-        "gpqaDiamond": 86.2,
-        "aime2026": null,
-        "gsm8k": null,
-        "lmsysElo": 1404,
-        "lmsysRank": null,
-        "costInput": 0.3,
-        "costOutput": 1.0,
-        "contextWindow": 200000,
-        "speedToksPerSec": 95
-      },
-      "tags": ["general", "efficient"],
-      "recommendedFor": ["general-purpose", "chat", "summarization"]
+      "object": "model",
+      "created": 1778383497,
+      "owned_by": "opencode"
     },
     {
       "id": "minimax-m2.5",
-      "name": "MiniMax M2.5",
-      "provider": "MiniMax",
-      "endpoint": "https://opencode.ai/zen/go/v1/messages",
-      "limits": {
-        "requestsPer5h": 6300,
-        "requestsPerWeek": 15900,
-        "requestsPerMonth": 31800,
-        "costPer5h": 12,
-        "costPerWeek": 30,
-        "costPerMonth": 60
-      },
-      "tier": {
-        "task": "fast-tasks",
-        "claudeComparison": "haiku",
-        "description": "Fast and cost-effective for simple tasks"
-      },
-      "benchmarks": {
-        "humanEval": null,
-        "mbpp": null,
-        "sweBench": null,
-        "sweBenchVerified": 80.2,
-        "mmlu": null,
-        "mmluPro": null,
-        "gpqaDiamond": 85.2,
-        "aime2026": 86.3,
-        "gsm8k": null,
-        "lmsysElo": null,
-        "lmsysRank": null,
-        "costInput": 0.2,
-        "costOutput": 0.8,
-        "contextWindow": 200000,
-        "speedToksPerSec": 110
-      },
-      "tags": ["fast", "cheap", "efficient"],
-      "recommendedFor": ["simple-tasks", "quick-answers", "drafting"]
+      "object": "model",
+      "created": 1778383497,
+      "owned_by": "opencode"
     },
     {
-      "id": "qwen3.6-plus",
-      "name": "Qwen3.6 Plus",
-      "provider": "Alibaba",
-      "endpoint": "https://opencode.ai/zen/go/v1/chat/completions",
-      "limits": {
-        "requestsPer5h": 3300,
-        "requestsPerWeek": 8200,
-        "requestsPerMonth": 16300,
-        "costPer5h": 12,
-        "costPerWeek": 30,
-        "costPerMonth": 60
-      },
-      "tier": {
-        "task": "general-purpose",
-        "claudeComparison": "sonnet-4.6",
-        "description": "Strong general-purpose with great value"
-      },
-      "benchmarks": {
-        "humanEval": 92.5,
-        "mbpp": null,
-        "sweBench": 56.6,
-        "sweBenchVerified": 78.8,
-        "mmlu": null,
-        "mmluPro": 83.5,
-        "gpqaDiamond": 78.2,
-        "aime2026": 87.0,
-        "gsm8k": null,
-        "lmsysElo": null,
-        "lmsysRank": null,
-        "costInput": 0.5,
-        "costOutput": 3.0,
-        "contextWindow": 1000000,
-        "speedToksPerSec": 120
-      },
-      "tags": ["general", "value"],
-      "recommendedFor": ["general-purpose", "coding", "analysis"]
+      "id": "kimi-k2.6",
+      "object": "model",
+      "created": 1778383497,
+      "owned_by": "opencode"
     },
     {
-      "id": "qwen3.5-plus",
-      "name": "Qwen3.5 Plus",
-      "provider": "Alibaba",
-      "endpoint": "https://opencode.ai/zen/go/v1/chat/completions",
-      "limits": {
-        "requestsPer5h": 10200,
-        "requestsPerWeek": 25200,
-        "requestsPerMonth": 50500,
-        "costPer5h": 12,
-        "costPerWeek": 30,
-        "costPerMonth": 60
-      },
-      "tier": {
-        "task": "fast-tasks",
-        "claudeComparison": "haiku",
-        "description": "Most cost-effective for high-volume tasks"
-      },
-      "benchmarks": {
-        "humanEval": 85.0,
-        "mbpp": null,
-        "sweBench": null,
-        "sweBenchVerified": 76.4,
-        "mmlu": null,
-        "mmluPro": null,
-        "gpqaDiamond": null,
-        "aime2026": null,
-        "gsm8k": null,
-        "lmsysElo": null,
-        "lmsysRank": null,
-        "costInput": 0.11,
-        "costOutput": 0.4,
-        "contextWindow": 1000000,
-        "speedToksPerSec": 130
-      },
-      "tags": ["fast", "cheap", "high-volume"],
-      "recommendedFor": ["simple-tasks", "batch-processing", "drafting"]
+      "id": "kimi-k2.5",
+      "object": "model",
+      "created": 1778383497,
+      "owned_by": "opencode"
+    },
+    {
+      "id": "glm-5.1",
+      "object": "model",
+      "created": 1778383497,
+      "owned_by": "opencode"
+    },
+    {
+      "id": "glm-5",
+      "object": "model",
+      "created": 1778383497,
+      "owned_by": "opencode"
     },
     {
       "id": "deepseek-v4-pro",
-      "name": "DeepSeek V4 Pro",
-      "provider": "DeepSeek",
-      "endpoint": "https://opencode.ai/zen/go/v1/chat/completions",
-      "limits": {
-        "requestsPer5h": 3450,
-        "requestsPerWeek": 8550,
-        "requestsPerMonth": 17150,
-        "costPer5h": 12,
-        "costPerWeek": 30,
-        "costPerMonth": 60
-      },
-      "tier": {
-        "task": "coding",
-        "claudeComparison": "opus-4.6",
-        "description": "Elite coding model with reasoning"
-      },
-      "benchmarks": {
-        "humanEval": 76.8,
-        "mbpp": null,
-        "sweBench": 55.4,
-        "sweBenchVerified": 80.6,
-        "mmlu": null,
-        "mmluPro": 87.5,
-        "gpqaDiamond": 90.1,
-        "aime2026": null,
-        "gsm8k": null,
-        "lmsysElo": null,
-        "lmsysRank": null,
-        "costInput": 0.5,
-        "costOutput": 1.5,
-        "contextWindow": 1000000,
-        "speedToksPerSec": 90
-      },
-      "tags": ["coding", "reasoning", "elite"],
-      "recommendedFor": ["python-coding", "algorithms", "system-design"]
+      "object": "model",
+      "created": 1778383497,
+      "owned_by": "opencode"
     },
     {
       "id": "deepseek-v4-flash",
-      "name": "DeepSeek V4 Flash",
-      "provider": "DeepSeek",
-      "endpoint": "https://opencode.ai/zen/go/v1/chat/completions",
-      "limits": {
-        "requestsPer5h": 31650,
-        "requestsPerWeek": 79050,
-        "requestsPerMonth": 158150,
-        "costPer5h": 12,
-        "costPerWeek": 30,
-        "costPerMonth": 60
-      },
-      "tier": {
-        "task": "fast-tasks",
-        "claudeComparison": "haiku",
-        "description": "Ultra-fast for simple tasks and prototyping"
-      },
-      "benchmarks": {
-        "humanEval": 69.5,
-        "mbpp": null,
-        "sweBench": 52.6,
-        "sweBenchVerified": 79.0,
-        "mmlu": null,
-        "mmluPro": 86.2,
-        "gpqaDiamond": 88.1,
-        "aime2026": null,
-        "gsm8k": null,
-        "lmsysElo": null,
-        "lmsysRank": null,
-        "costInput": 0.15,
-        "costOutput": 0.5,
-        "contextWindow": 1000000,
-        "speedToksPerSec": 150
-      },
-      "tags": ["fast", "ultra-cheap", "prototyping"],
-      "recommendedFor": ["quick-tasks", "prototyping", "experiments"]
+      "object": "model",
+      "created": 1778383497,
+      "owned_by": "opencode"
+    },
+    {
+      "id": "qwen3.6-plus",
+      "object": "model",
+      "created": 1778383497,
+      "owned_by": "opencode"
+    },
+    {
+      "id": "qwen3.5-plus",
+      "object": "model",
+      "created": 1778383497,
+      "owned_by": "opencode"
+    },
+    {
+      "id": "mimo-v2-pro",
+      "object": "model",
+      "created": 1778383497,
+      "owned_by": "opencode"
+    },
+    {
+      "id": "mimo-v2-omni",
+      "object": "model",
+      "created": 1778383497,
+      "owned_by": "opencode"
+    },
+    {
+      "id": "mimo-v2.5-pro",
+      "object": "model",
+      "created": 1778383497,
+      "owned_by": "opencode"
+    },
+    {
+      "id": "mimo-v2.5",
+      "object": "model",
+      "created": 1778383497,
+      "owned_by": "opencode"
     }
   ]
 }
