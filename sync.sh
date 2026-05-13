@@ -15,15 +15,46 @@ CONFIG_FILES=(
     "AGENTS.md"
 )
 
-CUSTOM_SKILLS=(
-    "context7-mcp"
-    "polars-nautilus-context"
-    "update-docs-on-completion"
-)
+RUN_ID="$(date -u +%Y-%m-%dT%H-%M-%SZ)"
 
 log() { echo "  $1"; }
 ok() { echo "  ✅ $1"; }
 warn() { echo "  ⚠️  $1"; }
+
+copy_file_with_backup() {
+    local src="$1"
+    local dst="$2"
+    local label="$3"
+
+    if [[ -f "$dst" ]]; then
+        local backup="${dst}.backup-$RUN_ID"
+        cp "$dst" "$backup"
+        log "Backed up existing → $(basename "$backup")"
+    fi
+    cp "$src" "$dst"
+    ok "Copied $label"
+}
+
+copy_dir_with_backup() {
+    local src="$1"
+    local dst="$2"
+    local label="$3"
+    local parent
+    local tmp
+
+    parent="$(dirname "$dst")"
+    tmp="$(mktemp -d "$parent/.sync-tmp.XXXXXX")"
+    cp -R "$src" "$tmp/$(basename "$dst")"
+    if [[ -e "$dst" ]]; then
+        local backup="${dst}.backup-$RUN_ID"
+        cp -R "$dst" "$backup"
+        log "Backed up existing → $(basename "$backup")"
+        rm -rf "$dst"
+    fi
+    mv "$tmp/$(basename "$dst")" "$dst"
+    rmdir "$tmp"
+    ok "Copied $label"
+}
 
 mkdir -p "$OPENCODE_DIR"
 mkdir -p "$OPENCODE_SKILLS_DIR"
@@ -36,40 +67,37 @@ for file in "${CONFIG_FILES[@]}"; do
     src="$SCRIPT_DIR/opencode/config/$file"
     dst="$OPENCODE_DIR/$file"
     if [[ -f "$src" ]]; then
-        if [[ -f "$dst" ]]; then
-            backup="${dst}.backup-$(date -u +%Y-%m-%dT%H-%M-%SZ)"
-            cp "$dst" "$backup"
-            log "Backed up existing → $(basename "$backup")"
-        fi
-        cp "$src" "$dst"
-        ok "Copied $file"
+        copy_file_with_backup "$src" "$dst" "$file"
     else
         warn "Source not found: $src"
     fi
 done
 
 echo ""
-echo "=== Syncing Custom Skills ==="
-for skill in "${CUSTOM_SKILLS[@]}"; do
-    src="$SCRIPT_DIR/opencode/skills/$skill"
-    dst="$OPENCODE_SKILLS_DIR/$skill"
-    if [[ -d "$src" ]]; then
-        rm -rf "$dst"
-        cp -R "$src" "$dst"
-        ok "Copied skill: $skill/"
-    else
-        warn "Source not found: $src"
-    fi
-done
+echo "=== Syncing OpenCode Skills ==="
+src="$SCRIPT_DIR/opencode/skills"
+if [[ -d "$src" ]]; then
+    skill_count=0
+    for skill_dir in "$src"/*/; do
+        if [[ -d "$skill_dir" ]]; then
+            skill_name="$(basename "$skill_dir")"
+            [[ "$skill_name" == .* ]] && continue
+            dst="$OPENCODE_SKILLS_DIR/$skill_name"
+            copy_dir_with_backup "$skill_dir" "$dst" "OpenCode skill: $skill_name/"
+            ((skill_count++)) || true
+        fi
+    done
+    echo "  Total: $skill_count skills"
+else
+    warn "Source not found: $src"
+fi
 
 echo ""
 echo "=== Syncing Commands ==="
 src="$SCRIPT_DIR/opencode/commands"
 dst="$OPENCODE_DIR/commands"
 if [[ -d "$src" ]]; then
-    rm -rf "$dst"
-    cp -R "$src" "$dst"
-    ok "Copied opencode/commands/"
+    copy_dir_with_backup "$src" "$dst" "opencode/commands/"
 else
     warn "Source not found: $src"
 fi
@@ -79,13 +107,7 @@ echo "=== Syncing Codex Configs ==="
 src="$SCRIPT_DIR/codex/config/AGENTS.md"
 dst="$CODEX_DIR/AGENTS.md"
 if [[ -f "$src" ]]; then
-    if [[ -f "$dst" ]]; then
-        backup="${dst}.backup-$(date -u +%Y-%m-%dT%H-%M-%SZ)"
-        cp "$dst" "$backup"
-        log "Backed up existing → $(basename "$backup")"
-    fi
-    cp "$src" "$dst"
-    ok "Copied Codex AGENTS.md"
+    copy_file_with_backup "$src" "$dst" "Codex AGENTS.md"
 else
     warn "Source not found: $src"
 fi
@@ -93,11 +115,18 @@ fi
 echo ""
 echo "=== Syncing Codex Skills ==="
 src="$SCRIPT_DIR/codex/skills"
-dst="$CODEX_SKILLS_DIR"
 if [[ -d "$src" ]]; then
-    rm -rf "$dst"
-    cp -R "$src" "$dst"
-    ok "Copied codex/skills/"
+    skill_count=0
+    for skill_dir in "$src"/*/; do
+        if [[ -d "$skill_dir" ]]; then
+            skill_name="$(basename "$skill_dir")"
+            [[ "$skill_name" == .* ]] && continue
+            dst="$CODEX_SKILLS_DIR/$skill_name"
+            copy_dir_with_backup "$skill_dir" "$dst" "Codex skill: $skill_name/"
+            ((skill_count++)) || true
+        fi
+    done
+    echo "  Total: $skill_count skills"
 else
     warn "Source not found: $src"
 fi

@@ -94,9 +94,11 @@ The Codex instructions use GPT-5.5 for complex coding and professional work, GPT
 ## Sync and Pull
 
 ```bash
-./sync.sh  # copy OpenCode and Codex configs/skills from this repo into local config directories
-./pull.sh  # pull OpenCode and Codex configs/skills from local config directories into this repo
+./sync.sh  # copy OpenCode and Codex configs/skills/commands from this repo into local config directories
+./pull.sh  # pull OpenCode and Codex configs/skills/commands from local config directories into this repo
 ```
+
+`sync.sh` preserves unrelated local skills. If a repo skill or command has the same name as a local one, it creates a timestamped backup before replacing it. `pull.sh` replaces same-name repo skills from local config and warns about repo-only skills that no longer exist locally, so use `git diff` to review pulled changes.
 
 ## Validation Checklist
 
