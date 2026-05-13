@@ -1,0 +1,7 @@
+interface:
+  display_name: "Codex Project Start"
+  short_description: "Bootstrap AGENTS.md and memory/ for a project"
+  default_prompt: "Use $codex-project-start to initialize AGENTS.md and a memory/ directory for this project."
+
+policy:
+  allow_implicit_invocation: true

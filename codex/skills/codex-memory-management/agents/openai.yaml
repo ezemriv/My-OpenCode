@@ -1,0 +1,7 @@
+interface:
+  display_name: "Codex Memory Management"
+  short_description: "Manage AGENTS.md and deep project memory"
+  default_prompt: "Use $codex-memory-management to organize AGENTS.md and the memory/ directory for this project."
+
+policy:
+  allow_implicit_invocation: true
