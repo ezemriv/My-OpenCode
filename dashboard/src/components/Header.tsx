@@ -45,7 +45,7 @@ export const Header: React.FC<HeaderProps> = ({ lastUpdated, onRefresh, isRefres
               <span className="hidden sm:inline">Refresh</span>
             </button>
             <a
-              href="https://github.com/ezemriv/My-OpenCode"
+              href="https://github.com/ezemriv/my-agents-setup"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="View source on GitHub"

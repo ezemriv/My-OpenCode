@@ -306,7 +306,7 @@ function assignTier(model: RawModel, benchmarks: BenchmarkData): Tier {
 ## 8. File Structure
 
 ```
-My-OpenCode/
+my-agents-setup/
 ├── dashboard/                    # React app
 │   ├── public/
 │   │   └── data/                # Static JSON data

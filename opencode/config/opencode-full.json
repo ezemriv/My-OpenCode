@@ -23,7 +23,7 @@
         "SSL_CERT_FILE": "/opt/homebrew/etc/openssl@3/cert.pem",
         "REQUESTS_CA_BUNDLE": "/opt/homebrew/etc/openssl@3/cert.pem"
       },
-      "enabled": true,
+      "enabled": false,
       "timeout": 300000
     }
   },

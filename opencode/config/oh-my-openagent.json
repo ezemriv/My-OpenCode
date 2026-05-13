@@ -3,7 +3,12 @@
   "model_fallback": true,
   "runtime_fallback": {
     "enabled": true,
-    "retry_on_errors": [400, 429, 503, 529],
+    "retry_on_errors": [
+      400,
+      429,
+      503,
+      529
+    ],
     "max_fallback_attempts": 3,
     "cooldown_seconds": 60,
     "timeout_seconds": 30,
@@ -24,7 +29,7 @@
     "hephaestus": {
       "model": "opencode-go/deepseek-v4-pro",
       "fallback_models": [
-        "opencode-go/deepseek-v4-flash",
+        "opencode-zen/deepseek-v4-flash-free",
         "opencode-go/kimi-k2.6"
       ],
       "prompt_append": "Explore thoroughly, then implement. Prefer small, testable changes."
@@ -37,11 +42,11 @@
       ]
     },
     "librarian": {
-      "model": "opencode-go/deepseek-v4-flash",
+      "model": "opencode-zen/deepseek-v4-flash-free",
       "fallback_models": "opencode-go/qwen3.5-plus"
     },
     "explore": {
-      "model": "opencode-go/deepseek-v4-flash"
+      "model": "opencode-zen/deepseek-v4-flash-free"
     },
     "multimodal-looker": {
       "model": "opencode-go/mimo-v2-omni",
@@ -65,14 +70,14 @@
     },
     "atlas": {
       "model": "opencode-go/deepseek-v4-pro",
-      "fallback_models": "opencode-go/deepseek-v4-flash"
+      "fallback_models": "opencode-zen/deepseek-v4-flash-free"
     },
     "code-reviewer": {
       "model": "opencode-go/kimi-k2.6",
       "fallback_models": "opencode-go/deepseek-v4-pro"
     },
     "sisyphus-junior": {
-      "model": "opencode-go/deepseek-v4-flash"
+      "model": "opencode-zen/deepseek-v4-flash-free"
     }
   },
   "categories": {
@@ -93,10 +98,10 @@
       "fallback_models": "opencode-go/qwen3.6-plus"
     },
     "quick": {
-      "model": "opencode-go/deepseek-v4-flash"
+      "model": "opencode-zen/deepseek-v4-flash-free"
     },
     "unspecified-low": {
-      "model": "opencode-go/deepseek-v4-flash"
+      "model": "opencode-zen/deepseek-v4-flash-free"
     },
     "unspecified-high": {
       "model": "opencode-go/deepseek-v4-pro",
@@ -115,7 +120,7 @@
     "modelConcurrency": {
       "opencode-go/kimi-k2.6": 2,
       "opencode-go/deepseek-v4-pro": 3,
-      "opencode-go/deepseek-v4-flash": 20,
+      "opencode-zen/deepseek-v4-flash-free": 20,
       "opencode-go/glm-5.1": 1,
       "opencode-go/qwen3.6-plus": 5
     }

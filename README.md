@@ -1,10 +1,23 @@
-# My-OpenCode
+# My Agents Setup
 
-OpenCode configuration and tools.
+OpenCode and Codex configuration and tools.
 
 ## Quick Start
 
-This repo contains configuration files for [OpenCode](https://opencode.ai) with two modes:
+This repo contains configuration files for [OpenCode](https://opencode.ai) and Codex.
+
+## Repository Layout
+
+- `opencode/config/`: OpenCode lite/full configs, oh-my-openagent routing, and OpenCode system instructions.
+- `codex/config/`: Codex system instructions adapted for GPT-5.4 and GPT-5.5.
+- `opencode/skills/`: OpenCode skills.
+- `opencode/commands/`: OpenCode command files.
+- `codex/skills/`: Codex skills.
+- `dashboard/`: OpenCode Go model dashboard.
+
+## OpenCode Quick Start
+
+OpenCode has two modes:
 
 ### Mode 1: Lite (Minimal)
 Lightweight setup with no agent routing:
@@ -56,15 +69,33 @@ npx oh-my-opencode install
 
 ### 4. Copy configs to your OpenCode directory
 ```bash
-cp myopencode_config/opencode-lite.json ~/.config/opencode/
-cp myopencode_config/opencode-full.json ~/.config/opencode/
-cp myopencode_config/oh-my-openagent.json ~/.config/opencode/
+cp opencode/config/opencode-lite.json ~/.config/opencode/
+cp opencode/config/opencode-full.json ~/.config/opencode/
+cp opencode/config/oh-my-openagent.json ~/.config/opencode/
 ```
 
 ### 5. Add aliases to your shell config (`.zshrc`, `.bashrc`, etc.)
 ```bash
 alias opencode-full='cp ~/.config/opencode/opencode-full.json ~/.config/opencode/opencode.json && echo "OpenCode: agents ON (oh-my-openagent)" && opencode'
 alias opencode-lite='cp ~/.config/opencode/opencode-lite.json ~/.config/opencode/opencode.json && echo "OpenCode: agents OFF (lite mode)" && opencode'
+```
+
+## Codex Setup
+
+Copy the Codex agent instructions into your Codex config directory:
+
+```bash
+mkdir -p ~/.codex
+cp codex/config/AGENTS.md ~/.codex/AGENTS.md
+```
+
+The Codex instructions use GPT-5.5 for complex coding and professional work, GPT-5.4 for everyday implementation, and GPT-5.4 mini for bounded low-risk side tasks.
+
+## Sync and Pull
+
+```bash
+./sync.sh  # copy OpenCode and Codex configs/skills from this repo into local config directories
+./pull.sh  # pull OpenCode and Codex configs/skills from local config directories into this repo
 ```
 
 ## Validation Checklist
@@ -226,7 +257,7 @@ The `oh-my-openagent.json` file implements **tiered model routing** to maximize 
 
 An interactive dashboard for OpenCode Go models with benchmarks, usage limits, and task-based tiering.
 
-**Live URL:** https://ezemriv.github.io/My-OpenCode/
+**Live URL:** https://ezemriv.github.io/my-agents-setup/
 
 ### Features
 

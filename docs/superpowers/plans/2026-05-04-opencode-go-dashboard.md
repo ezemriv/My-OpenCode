@@ -13,7 +13,7 @@
 ## File Structure
 
 ```
-My-OpenCode/
+my-agents-setup/
 ├── dashboard/
 │   ├── public/
 │   │   └── data/
@@ -572,7 +572,7 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/My-OpenCode/',
+  base: '/my-agents-setup/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
@@ -1058,7 +1058,7 @@ export const Header: React.FC<HeaderProps> = ({ lastUpdated, onRefresh, isRefres
               <span className="hidden sm:inline">Refresh</span>
             </button>
             <a
-              href="https://github.com/ezemriv/My-OpenCode"
+              href="https://github.com/ezemriv/my-agents-setup"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 text-text-secondary hover:text-text-primary transition-colors"
@@ -1920,7 +1920,7 @@ git commit -m "ci: add GitHub Actions for deployment and weekly data updates"
 - [ ] **Step 1: Update README.md**
 
 ```markdown
-# My-OpenCode
+# My Agents Setup
 
 OpenCode configuration and tools.
 
@@ -1928,7 +1928,7 @@ OpenCode configuration and tools.
 
 An interactive dashboard for OpenCode Go models with benchmarks, usage limits, and task-based tiering.
 
-**Live URL:** https://ezemriv.github.io/My-OpenCode/
+**Live URL:** https://ezemriv.github.io/my-agents-setup/
 
 ### Features
 
@@ -2017,7 +2017,7 @@ Expected: `index.html`, `assets/` folder present.
 cd dashboard && npm run preview
 ```
 
-Open browser to `http://localhost:4173/My-OpenCode/` and verify:
+Open browser to `http://localhost:4173/my-agents-setup/` and verify:
 - Header renders with title and refresh button
 - Summary bar shows stats
 - Usage limits section is collapsible
